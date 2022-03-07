@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1646642837" author="DianaM">
+        <createTable tableName="company">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_company"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="contract_number" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1646642838" author="DianaM">
+        <createTable tableName="moderator">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_moderator"/>
+            </column>
+            <column name="position" type="VARCHAR(25)"/>
+            <column name="first_name" type="VARCHAR(25)"/>
+            <column name="last_name" type="VARCHAR(30)"/>
+            <column name="patronymic" type="VARCHAR(30)"/>
+            <column name="company_id" type="BIGINT">
+                <constraints foreignKeyName="fk_moderator_company_id" references="company(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
