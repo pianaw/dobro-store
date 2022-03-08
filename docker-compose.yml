@@ -22,6 +22,17 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
 
+  kpfu-db-redis:
+    container_name: kpfu-db-redis
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./db-redis/redis-data:/var/lib/redis
+      - ./db-redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
 volumes:
   kpfu-postgresql-data:
 
