@@ -28,4 +28,15 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="1646642839" author="DianaM">
+        <createTable tableName="point">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_point"/>
+            </column>
+            <column name="city" type="VARCHAR(50)"/>
+            <column name="longitude" type="FLOAT"/>
+            <column name="latitude" type="FLOAT"/>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
