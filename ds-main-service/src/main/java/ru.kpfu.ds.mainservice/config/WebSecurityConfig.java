@@ -14,7 +14,10 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final List<String> PERMITTED_URIS = List.of(
-            "/v1/ui/**"
+            "/v1/ui/**",
+            "/**/swagger-ui.html",
+            "/**/swagger-ui/**",
+            "/**/v3/api-docs/**"
     );
 
     @Override
