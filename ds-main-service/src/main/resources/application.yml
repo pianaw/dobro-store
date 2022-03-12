@@ -18,3 +18,8 @@ spring:
       enabled: true
       change-log: classpath:db/changelog/db.changelog-master-postgres.xml
       default-schema: ${POSTGRES_SCHEMA:data}
+
+ds:
+  app:
+    url: ${APP_URL}
+    api-path: ${API_PATH}
