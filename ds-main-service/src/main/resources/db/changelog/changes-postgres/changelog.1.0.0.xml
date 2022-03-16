@@ -39,4 +39,41 @@
             <column name="latitude" type="FLOAT"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="1646642840" author="DianaM">
+        <createTable tableName="client">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_client"/>
+            </column>
+            <column name="first_name" type="VARCHAR(25)"/>
+            <column name="last_name" type="VARCHAR(30)"/>
+            <column name="patronymic" type="VARCHAR(30)"/>
+            <column name="level" type="SMALLINT"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1646642841" author="DianaM">
+        <createTable tableName="admin">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_admin"/>
+            </column>
+            <column name="name" type="VARCHAR(90)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1646642842" author="DianaM">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user"/>
+            </column>
+            <column name="role" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="hash_password" type="VARCHAR(100)"/>
+            <column name="owner_id" type="BIGINT"/>
+            <column name="redis_id" type="UUID">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="user" columnNames="role, owner_id"/>
+    </changeSet>
 </databaseChangeLog>
