@@ -1,6 +1,7 @@
 package ru.kpfu.ds.mainservice.model.entity;
 
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Data
 @RedisHash("user")
+@Builder
 public class RedisUser {
 
     @Id

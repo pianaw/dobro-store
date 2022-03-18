@@ -23,3 +23,17 @@ ds:
   app:
     url: ${APP_URL}
     api-path: ${API_PATH}
+    auth:
+      jwt:
+        client:
+          access-token-expiration: ${CLIENT_ACCESS_TOKEN_EXPIRATION_SEC}
+          refresh-token-expiration: ${CLIENT_REFRESH_TOKEN_EXPIRATION_SEC}
+          secret: ${CLIENT_JWT_SECRET}
+        moderator:
+          access-token-expiration: ${MODERATOR_ACCESS_TOKEN_EXPIRATION_SEC}
+          refresh-token-expiration: ${MODERATOR_REFRESH_TOKEN_EXPIRATION_SEC}
+          secret: ${MODERATOR_JWT_SECRET}
+        admin:
+          access-token-expiration: ${ADMIN_ACCESS_TOKEN_EXPIRATION_SEC}
+          refresh-token-expiration: ${ADMIN_REFRESH_TOKEN_EXPIRATION_SEC}
+          secret: ${ADMIN_JWT_SECRET}
