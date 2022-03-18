@@ -76,4 +76,8 @@
         </createTable>
         <addUniqueConstraint tableName="user" columnNames="role, owner_id"/>
     </changeSet>
+
+    <changeSet id="1646642843" author="DianaM">
+        <dropNotNullConstraint tableName="user" columnName="redis_id"/>
+    </changeSet>
 </databaseChangeLog>

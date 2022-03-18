@@ -136,5 +136,6 @@
     <orderEntry type="library" name="Maven: org.webjars:swagger-ui:4.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:webjars-locator-core:0.46" level="project" />
     <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.138" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-configuration-processor:2.5.8" level="project" />
   </component>
 </module>
