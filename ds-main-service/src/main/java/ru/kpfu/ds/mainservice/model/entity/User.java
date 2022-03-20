@@ -1,12 +1,14 @@
 package ru.kpfu.ds.mainservice.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ru.kpfu.ds.mainservice.model.enums.UserRole;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
 @Setter

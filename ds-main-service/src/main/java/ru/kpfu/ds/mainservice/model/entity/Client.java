@@ -1,11 +1,13 @@
 package ru.kpfu.ds.mainservice.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import ru.kpfu.ds.mainservice.model.enums.ClientLevel;
 
 import javax.persistence.*;
 
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Getter
 @Setter
