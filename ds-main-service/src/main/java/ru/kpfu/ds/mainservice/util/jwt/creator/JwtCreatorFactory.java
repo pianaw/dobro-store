@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.util;
+package ru.kpfu.ds.mainservice.util.jwt.creator;
 
 import org.springframework.stereotype.Component;
 import ru.kpfu.ds.mainservice.model.enums.UserRole;

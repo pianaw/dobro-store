@@ -29,7 +29,7 @@ public class SwaggerConfig {
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.APIKEY)
                 .in(SecurityScheme.In.HEADER)
-                .name(Constant.AUTHORIZATION);
+                .name(Constant.ACCESS_TOKEN);
 
         Components components = new Components()
                 .addSecuritySchemes(Constant.BEARER, securityScheme);
@@ -47,7 +47,15 @@ public class SwaggerConfig {
     public GroupedOpenApi groupedOpenApi() {
         return GroupedOpenApi.builder()
                 .group("ui-api")
-                .pathsToMatch("/v1/ui/**")
+                .pathsToMatch("/api/v1/ui/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi groupedAuthApi() {
+        return GroupedOpenApi.builder()
+                .group("auth-api")
+                .pathsToMatch("/api/v1/auth/**")
                 .build();
     }
 
@@ -55,7 +63,7 @@ public class SwaggerConfig {
     public GroupedOpenApi groupedUserApi() {
         return GroupedOpenApi.builder()
                 .group("user-api")
-                .pathsToMatch("/v1/user/**")
+                .pathsToMatch("/api/v1/user/**")
                 .build();
     }
 }

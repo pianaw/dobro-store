@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.util;
+package ru.kpfu.ds.mainservice.util.jwt.creator;
 
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -11,33 +11,33 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
-public class ClientJwtCreator extends JwtCreator {
+public class AdminJwtCreator extends JwtCreator {
 
-    private final Algorithm clientAlgorithm;
+    private final Algorithm adminAlgorithm;
 
-    @Value("${ds.app.auth.jwt.client.access-token-expiration}")
-    private long clientAccessTokenExpiration;
+    @Value("${ds.app.auth.jwt.admin.access-token-expiration}")
+    private long adminAccessTokenExpiration;
 
-    @Value("${ds.app.auth.jwt.client.refresh-token-expiration}")
-    private long clientRefreshTokenExpiration;
+    @Value("${ds.app.auth.jwt.admin.refresh-token-expiration}")
+    private long adminRefreshTokenExpiration;
 
     @Override
     protected Date getAccessTokenExpirationTime() {
-        return getExpirationDate(clientAccessTokenExpiration);
+        return getExpirationDate(adminAccessTokenExpiration);
     }
 
     @Override
     protected Date getRefreshTokenExpirationTime() {
-        return getExpirationDate(clientRefreshTokenExpiration);
+        return getExpirationDate(adminRefreshTokenExpiration);
     }
 
     @Override
     protected String sign(JWTCreator.Builder builder) {
-        return builder.sign(clientAlgorithm);
+        return builder.sign(adminAlgorithm);
     }
 
     @Override
     public UserRole getUserRole() {
-        return UserRole.CLIENT;
+        return UserRole.ADMIN;
     }
 }

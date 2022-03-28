@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kpfu.ds.mainservice.model.dto.JwtTokenDTO;
 import ru.kpfu.ds.mainservice.model.entity.User;
-import ru.kpfu.ds.mainservice.util.JwtCreator;
-import ru.kpfu.ds.mainservice.util.JwtCreatorFactory;
+import ru.kpfu.ds.mainservice.util.jwt.creator.JwtCreator;
+import ru.kpfu.ds.mainservice.util.jwt.creator.JwtCreatorFactory;
 
 import java.util.UUID;
 
@@ -14,6 +14,7 @@ import java.util.UUID;
 public class JwtService {
 
     private final JwtCreatorFactory factory;
+
     public JwtTokenDTO createJwtToken(User user, UUID jti) {
         JwtCreator jwtCreator = factory.getJwtCreatorByUserRole(user.getUserRole());
 

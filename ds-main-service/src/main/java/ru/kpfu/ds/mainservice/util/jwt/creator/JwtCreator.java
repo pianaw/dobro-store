@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.util;
+package ru.kpfu.ds.mainservice.util.jwt.creator;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;

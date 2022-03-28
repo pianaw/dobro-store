@@ -1,23 +1,36 @@
 package ru.kpfu.ds.mainservice.config;
 
 import com.auth0.jwt.algorithms.Algorithm;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDecisionManager;
+import org.springframework.security.access.AccessDecisionVoter;
+import org.springframework.security.access.vote.AuthenticatedVoter;
+import org.springframework.security.access.vote.RoleVoter;
+import org.springframework.security.access.vote.UnanimousBased;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.expression.WebExpressionVoter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.kpfu.ds.mainservice.model.enums.UserRole;
+import ru.kpfu.ds.mainservice.security.AccessTokenFilter;
+import ru.kpfu.ds.mainservice.security.JwtAuthenticationProvider;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${ds.app.auth.jwt.moderator.secret}")
@@ -29,8 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${ds.app.auth.jwt.client.secret}")
     private String clientSecret;
 
+    @Autowired
+    private JwtAuthenticationProvider jwtAuthenticationProvider;
+
     private static final List<String> PERMITTED_URIS = List.of(
-            "/v1/ui/**",
+            "/api/v1/auth",
+            "/api/v1/ui/**",
             "/**/swagger-ui.html",
             "/**/swagger-ui/**",
             "/**/v3/api-docs/**"
@@ -41,8 +58,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         var authorizeRequests = new LinkedList<>(PERMITTED_URIS);
 
         http.csrf().disable()
-                .authorizeRequests().antMatchers(authorizeRequests.toArray(new String[0]))
-                .permitAll();
+                .authorizeRequests().antMatchers(authorizeRequests.toArray(new String[0])).permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/v1/user/client/**").hasAnyAuthority(UserRole.CLIENT.name()).accessDecisionManager(accessDecisionManager())
+                .antMatchers("/api/v1/user/admin/**").hasAnyAuthority(UserRole.ADMIN.name()).accessDecisionManager(accessDecisionManager())
+                .antMatchers("/api/v1/user/moderator/**").hasAnyAuthority(UserRole.MODERATOR.name()).accessDecisionManager(accessDecisionManager())
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -66,5 +91,42 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public Algorithm moderatorAlgorithm() {
         return Algorithm.HMAC256(moderatorSecret);
+    }
+
+    @Bean
+    public FilterRegistrationBean<AccessTokenFilter> authAccessTokenFilter() {
+        FilterRegistrationBean<AccessTokenFilter> registrationBean
+                = new FilterRegistrationBean<>();
+
+        registrationBean.setFilter(accessTokenFilter());
+        registrationBean.addUrlPatterns("/api/v1/user/**");
+
+        return registrationBean;
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
+        authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public AccessTokenFilter accessTokenFilter() {
+        return new AccessTokenFilter();
+    }
+
+    @Bean
+    public AccessDecisionManager accessDecisionManager() {
+        List<AccessDecisionVoter<? extends Object>> decisionVoters
+                = Arrays.asList(
+                        new WebExpressionVoter(),
+                new RoleVoter(),
+                new AuthenticatedVoter());
+        return new UnanimousBased(decisionVoters);
     }
 }
