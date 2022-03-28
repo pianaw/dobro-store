@@ -11,7 +11,7 @@ import ru.kpfu.ds.mainservice.service.CatalogService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/ui/point")
+@RequestMapping("/api/v1/ui/point")
 @RequiredArgsConstructor
 public class PointController {
 

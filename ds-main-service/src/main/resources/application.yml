@@ -1,5 +1,7 @@
 debug: ${SPRING_DEBUG:false}
 spring:
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     driver-class-name: org.postgresql.Driver
     hikari:

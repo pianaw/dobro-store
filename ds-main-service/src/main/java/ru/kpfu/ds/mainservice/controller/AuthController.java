@@ -10,7 +10,7 @@ import ru.kpfu.ds.mainservice.model.dto.UserDTO;
 import ru.kpfu.ds.mainservice.service.AuthService;
 
 @RestController
-@RequestMapping("/v1/user/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
