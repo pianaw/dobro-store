@@ -13,13 +13,14 @@ import java.util.UUID;
 @Component
 public abstract class JwtCreator {
 
-    public String createAccessTokenFor(User user) {
+    public String createAccessTokenFor(User user, UUID jti) {
         JWTCreator.Builder builder = JWT.create()
                 .withSubject(user.getId().toString())
                 .withClaim("role", user.getUserRole().toString())
                 .withClaim("email", user.getEmail())
                 .withClaim("redisId", user.getRedisId().toString())
-                .withClaim("ownerId", user.getOwnerId());
+                .withClaim("ownerId", user.getOwnerId())
+                .withJWTId(jti.toString());
 
         Date expirationDate = getAccessTokenExpirationTime();
         builder.withExpiresAt(expirationDate);
@@ -29,7 +30,8 @@ public abstract class JwtCreator {
 
     public String createRefreshTokenFor(User user, UUID jti) {
         JWTCreator.Builder builder = JWT.create()
-                .withSubject(user.getId().toString())
+                .withSubject(user.getOwnerId().toString())
+                .withClaim("role", getUserRole().toString())
                 .withJWTId(jti.toString());
 
         Date expirationDate = getRefreshTokenExpirationTime();

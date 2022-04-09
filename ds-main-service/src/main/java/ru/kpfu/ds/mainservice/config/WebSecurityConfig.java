@@ -22,8 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.expression.WebExpressionVoter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.kpfu.ds.mainservice.model.enums.UserRole;
-import ru.kpfu.ds.mainservice.security.AccessTokenFilter;
+import ru.kpfu.ds.mainservice.security.filter.AccessTokenFilter;
 import ru.kpfu.ds.mainservice.security.JwtAuthenticationProvider;
+import ru.kpfu.ds.mainservice.security.filter.RefreshTokenFilter;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -66,7 +67,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/user/moderator/**").hasAnyAuthority(UserRole.MODERATOR.name()).accessDecisionManager(accessDecisionManager())
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(refreshTokenFilter(), AccessTokenFilter.class);
 
 
         http.sessionManagement()
@@ -104,6 +106,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return registrationBean;
     }
 
+    @Bean
+    public FilterRegistrationBean<RefreshTokenFilter> authRefrbeshTokenFilter() {
+        FilterRegistrationBean<RefreshTokenFilter> registrationBean = new FilterRegistrationBean<>();
+
+        registrationBean.setFilter(refreshTokenFilter());
+        registrationBean.addUrlPatterns("/api/v1/auth/refresh");
+
+        return registrationBean;
+    }
+
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
         authenticationManagerBuilder.authenticationProvider(jwtAuthenticationProvider);
@@ -118,6 +130,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public AccessTokenFilter accessTokenFilter() {
         return new AccessTokenFilter();
+    }
+
+    @Bean
+    public RefreshTokenFilter refreshTokenFilter() {
+        return new RefreshTokenFilter();
     }
 
     @Bean

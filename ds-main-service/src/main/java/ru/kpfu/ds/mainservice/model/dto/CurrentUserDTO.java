@@ -12,9 +12,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CurrentUserDTO {
 
+    private UUID jti;
     private UserRole role;
     private String email;
     private UUID redisId;
     private Long ownerId;
-
 }

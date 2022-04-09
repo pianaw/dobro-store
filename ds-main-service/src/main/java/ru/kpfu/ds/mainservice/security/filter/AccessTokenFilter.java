@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.security;
+package ru.kpfu.ds.mainservice.security.filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -6,6 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.kpfu.ds.mainservice.model.constant.Constant;
+import ru.kpfu.ds.mainservice.model.enums.TokenType;
+import ru.kpfu.ds.mainservice.security.JwtAuthentication;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,19 +16,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class AccessTokenFilter extends OncePerRequestFilter {
+public class AccessTokenFilter extends OncePerRequestFilter { //TODO подумать, как убрать копипаст в фильтрах
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    private final TokenType tokenType = TokenType.ACCESS_TOKEN;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String token = request.getHeader(Constant.ACCESS_TOKEN);
+        String token = request.getHeader(tokenType.name());
 
         if (token != null) {
             token = token.replaceAll(Constant.BEARER + " ", "");
-            JwtAuthentication jwtAuthentication = new JwtAuthentication(token);
+            JwtAuthentication jwtAuthentication = new JwtAuthentication(token, tokenType);
             authenticationManager.authenticate(jwtAuthentication);
             SecurityContextHolder.getContext().setAuthentication(jwtAuthentication);
         }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.kpfu.ds.mainservice.model.constant.Constant;
+import ru.kpfu.ds.mainservice.model.enums.TokenType;
 
 import java.util.Collections;
 
@@ -29,7 +30,7 @@ public class SwaggerConfig {
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.APIKEY)
                 .in(SecurityScheme.In.HEADER)
-                .name(Constant.ACCESS_TOKEN);
+                .name(TokenType.ACCESS_TOKEN.name());
 
         Components components = new Components()
                 .addSecuritySchemes(Constant.BEARER, securityScheme);

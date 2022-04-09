@@ -6,7 +6,9 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+import ru.kpfu.ds.mainservice.model.constant.Constant;
 import ru.kpfu.ds.mainservice.model.dto.CurrentUserDTO;
+import ru.kpfu.ds.mainservice.model.enums.TokenType;
 import ru.kpfu.ds.mainservice.util.jwt.extractor.JwtExtractor;
 
 @Component
@@ -20,7 +22,8 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
 
         try {
-            CurrentUserDTO userDTO = jwtExtractor.extract(jwtAuthentication.getName());
+            String jwt = jwtAuthentication.getName();
+            CurrentUserDTO userDTO = jwtExtractor.extract(jwt, jwtAuthentication.getTokenType());
             jwtAuthentication.setAuthenticated(true);
             jwtAuthentication.setUserDTO(userDTO);
         } catch (JWTVerificationException e) {

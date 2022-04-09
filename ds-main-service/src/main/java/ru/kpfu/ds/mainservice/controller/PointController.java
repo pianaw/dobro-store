@@ -21,4 +21,5 @@ public class PointController {
     public List<PointDTO> getAllPointsByCity(@RequestParam String city) {
         return catalogService.getAllPointsByCity(city);
     }
+
 }
