@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import ru.kpfu.ds.mainservice.model.dto.CurrentUserDTO;
+import ru.kpfu.ds.mainservice.model.enums.TokenType;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -15,11 +16,13 @@ import java.util.Collections;
 public class JwtAuthentication implements Authentication {
 
     private final String token;
+    private final TokenType tokenType;
     private boolean isAuthenticated;
     private CurrentUserDTO userDTO;
 
-    public JwtAuthentication(String token) {
+    public JwtAuthentication(String token, TokenType tokenType) {
         this.token = token;
+        this.tokenType = tokenType;
     }
 
     @Override
