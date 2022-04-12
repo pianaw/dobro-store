@@ -4,6 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <include relativeToChangelogFile="true" file="changes-postgres/changelog.1.0.0.xml"/>
+    <include relativeToChangelogFile="true" file="changes-postgres/changelog.18-03-22.xml"/>
+    <include relativeToChangelogFile="true" file="changes-postgres/changelog.12-04-22.xml"/>
 
 </databaseChangeLog>
