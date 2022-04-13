@@ -21,6 +21,8 @@ services:
       - ./db-postgres/postgresql.conf:/etc/postgresql/postgresql.conf
     ports:
       - ${POSTGRES_PORT}:5432
+    networks:
+      - net
 
   kpfu-db-redis:
     container_name: kpfu-db-redis
@@ -32,11 +34,29 @@ services:
       - ./db-redis/redis.conf:/usr/local/etc/redis/redis.conf
     environment:
       - REDIS_REPLICATION_MODE=master
+    networks:
+      - net
+
+  ds-main-service:
+    image: ${DOCKER_REGISTRY}/ds-main-service:${DOCKER_TAG}
+    container_name: ds-main-service
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      - kpfu-db-postgres
+      - kpfu-db-redis
+    ports:
+      - ${MAIN_SERVICE_PORT}:${MAIN_SERVICE_PORT}
+    networks:
+      - net
 
 volumes:
   kpfu-postgresql-data:
 
 networks:
+  net:
+    name: network
   default:
     driver: bridge
     attachable: true

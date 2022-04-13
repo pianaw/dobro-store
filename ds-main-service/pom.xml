@@ -62,4 +62,15 @@
         </dependency>
     </dependencies>
 
+
+    <build>
+        <plugins>
+            <!--            Could not find or load main class org.springframework.boot.loader.JarLauncher docker-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

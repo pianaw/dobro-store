@@ -1,0 +1,5 @@
+version: '3.4'
+
+services:
+  ds-main-service:
+    build: ds-main-service
