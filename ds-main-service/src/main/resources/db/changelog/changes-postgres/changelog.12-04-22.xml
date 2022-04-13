@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+<changeSet id="12-04-22-01" author="DianaM">
+        <createTable tableName="object">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_object"/>
+            </column>
+            <column name="type" type="VARCHAR(30)" remarks="Тип объекта"/>
+            <column name="point_id" type="BIGINT" remarks="Идентификатор пункт, принявшего объект">
+                <constraints foreignKeyName="fk_object_point_id" references="point(id)"/>
+            </column>
+            <column name="owner_id" type="BIGINT" remarks="Идентификатор бывшего держателя объекта">
+                <constraints foreignKeyName="fk_object_owner_id" references="client(id)"/>
+            </column>
+            <column name="received_at" type="timestamp" remarks="Время принятия объекта в пункте приёма"/>
+            <column name="sent_at" type="timestamp" remarks="Время отбытия объекта из пункта приёма"/>
+        </createTable>
+        <setTableRemarks tableName="object" remarks="Объект (вторсырьё)"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-03" author="DianaM">
+        <setTableRemarks tableName="company" remarks="Партнёрская компания"/>
+        <setColumnRemarks tableName="company" columnName="id" remarks="Идентифкатор партнёрской компании"/>
+        <setColumnRemarks tableName="company" columnName="name" remarks="Наименование компании"/>
+        <setColumnRemarks tableName="company" columnName="contract_number" remarks="Номер договора"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-04" author="DianaM">
+        <setColumnRemarks tableName="moderator" columnName="id" remarks="Идентификатор модератора (представителя компании)"/>
+        <setColumnRemarks tableName="moderator" columnName="position" remarks="Должность модератора в компании"/>
+        <setColumnRemarks tableName="moderator" columnName="first_name" remarks="Имя модератора"/>
+        <setColumnRemarks tableName="moderator" columnName="last_name" remarks="Фамилия модератора"/>
+        <setColumnRemarks tableName="moderator" columnName="patronymic" remarks="Отчество модератора"/>
+        <setColumnRemarks tableName="moderator" columnName="company_id" remarks="Идентифитор компании, к которой относится модератор"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-05" author="DianaM">
+        <setTableRemarks tableName="point" remarks="Пункт приёма вторсырья"/>
+        <setColumnRemarks tableName="point" columnName="id" remarks="Идентификтор пункта приёма"/>
+        <setColumnRemarks tableName="point" columnName="city" remarks="Город пункта приема"/>
+        <setColumnRemarks tableName="point" columnName="longitude" remarks="Долгота"/>
+        <setColumnRemarks tableName="point" columnName="latitude" remarks="Широта"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-06" author="DianaM">
+        <setTableRemarks tableName="client" remarks="Клиент"/>
+        <setColumnRemarks tableName="client" columnName="id" remarks="Идентификтор клиента"/>
+        <setColumnRemarks tableName="client" columnName="first_name" remarks="Имя клиента"/>
+        <setColumnRemarks tableName="client" columnName="last_name" remarks="Фамилия клиента"/>
+        <setColumnRemarks tableName="client" columnName="patronymic" remarks="Отчество клиента"/>
+        <setColumnRemarks tableName="client" columnName="level" remarks="Достигнутый уровень клиента"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-07" author="DianaM">
+        <setTableRemarks tableName="admin" remarks="Администратор"/>
+        <setColumnRemarks tableName="admin" columnName="id" remarks="Идентификтор администратора"/>
+        <setColumnRemarks tableName="admin" columnName="name" remarks="Имя администратора"/>
+    </changeSet>
+
+    <changeSet id="12-04-22-08" author="DianaM">
+        <setTableRemarks tableName="user" remarks="Пользователь"/>
+        <setColumnRemarks tableName="user" columnName="id" remarks="Идентификтор пользователя"/>
+        <setColumnRemarks tableName="user" columnName="role" remarks="Роль пользователя"/>
+        <setColumnRemarks tableName="user" columnName="email" remarks="Электронная почта пользователя"/>
+        <setColumnRemarks tableName="user" columnName="hash_password" remarks="Закодированный пароль пользователя"/>
+        <setColumnRemarks tableName="user" columnName="owner_id" remarks="Идентифактор ролевой сущности пользователя"/>
+        <setColumnRemarks tableName="user" columnName="redis_id" remarks="Идентифкатор пользователя в Redis"/>
+    </changeSet>
+</databaseChangeLog>
