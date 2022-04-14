@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/dobro-store.iml" filepath="$PROJECT_DIR$/dobro-store.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ds-main-service/ds-main-service.iml" filepath="$PROJECT_DIR$/ds-main-service/ds-main-service.iml" />
-    </modules>
-  </component>
-</project>
