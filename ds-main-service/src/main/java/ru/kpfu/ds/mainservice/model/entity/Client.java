@@ -3,7 +3,7 @@ package ru.kpfu.ds.mainservice.model.entity;
 import lombok.Getter;
 import lombok.Setter;
 import ru.kpfu.ds.mainservice.model.enums.ClientLevel;
-import ru.kpfu.ds.mainservice.model.enums.ObjectType;
+import ru.kpfu.ds.mainservice.model.enums.converter.ClientLevelConverter;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,6 +28,7 @@ public class Client {
     private String patronymic;
 
     @Column(name = "level")
+    @Convert(converter = ClientLevelConverter.class)
     private ClientLevel clientLevel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client")

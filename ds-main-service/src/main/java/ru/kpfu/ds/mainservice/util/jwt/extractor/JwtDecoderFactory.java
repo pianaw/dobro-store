@@ -14,11 +14,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-public class JwtExtractor {
+public class JwtDecoderFactory {
 
     private final Map<UserRole, JwtDecoder> jwtDecoderMap;
 
-    public JwtExtractor(List<JwtDecoder> jwtDecoders) {
+    public JwtDecoderFactory(List<JwtDecoder> jwtDecoders) {
         jwtDecoderMap = jwtDecoders.stream()
                 .collect(Collectors.toMap(JwtDecoder::getUserRole, Function.identity()));
     }
