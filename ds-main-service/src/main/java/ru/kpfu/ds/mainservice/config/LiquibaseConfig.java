@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import ru.kpfu.ds.mainservice.property.LiquibaseProperty;
-import ru.kpfu.ds.mainservice.service.SchemaCreatorService;
+import ru.kpfu.ds.mainservice.service.impl.SchemaCreatorService;
 
 import javax.sql.DataSource;
 

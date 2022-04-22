@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kpfu.ds.mainservice.model.dto.PointDTO;
-import ru.kpfu.ds.mainservice.service.CatalogService;
+import ru.kpfu.ds.mainservice.service.impl.CatalogService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/ui/point")
+@RequestMapping("/api/v1/ui/points")
 @RequiredArgsConstructor
 public class PointController {
 

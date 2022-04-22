@@ -21,7 +21,7 @@ public class Point {
 
     @Column
     private Double longitude;
-    
+
     @Column
     private Double latitude;
 

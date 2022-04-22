@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.service;
+package ru.kpfu.ds.mainservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

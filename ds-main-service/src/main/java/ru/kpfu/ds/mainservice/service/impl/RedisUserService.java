@@ -1,4 +1,4 @@
-package ru.kpfu.ds.mainservice.service;
+package ru.kpfu.ds.mainservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RedisService {
+public class RedisUserService {
 
     private final RedisUserRepository redisUserRepository;
     private final UserRepository userRepository;

@@ -25,3 +25,6 @@ hs_err_pid*
 **/target/**
 
 .idea
+
+dobro-store.iml
+ds-main-service.iml

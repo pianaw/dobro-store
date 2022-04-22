@@ -3,7 +3,7 @@ package ru.kpfu.ds.mainservice.model.dto;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserEmailPasswordDTO {
 
     private String email;
     private String password;
