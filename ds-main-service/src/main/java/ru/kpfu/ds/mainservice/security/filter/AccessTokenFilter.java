@@ -25,7 +25,7 @@ public class AccessTokenFilter extends OncePerRequestFilter { //TODO подум�
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String token = request.getHeader(tokenType.name());
+        String token = request.getHeader(tokenType.getName());
 
         if (token != null) {
             token = token.replaceAll(Constant.BEARER + " ", "");

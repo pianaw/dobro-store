@@ -1,21 +1,22 @@
 package ru.kpfu.ds.mainservice.security;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import ru.kpfu.ds.mainservice.model.constant.Constant;
 import ru.kpfu.ds.mainservice.model.dto.CurrentUserDTO;
-import ru.kpfu.ds.mainservice.model.enums.TokenType;
-import ru.kpfu.ds.mainservice.util.jwt.extractor.JwtExtractor;
+import ru.kpfu.ds.mainservice.model.exception.DobrostoreTokenExpiredException;
+import ru.kpfu.ds.mainservice.model.exception.DobrostoreTokenVerificationException;
+import ru.kpfu.ds.mainservice.util.jwt.extractor.JwtDecoderFactory;
 
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private JwtExtractor jwtExtractor;
+    private JwtDecoderFactory jwtDecoderFactory;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -23,11 +24,13 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         try {
             String jwt = jwtAuthentication.getName();
-            CurrentUserDTO userDTO = jwtExtractor.extract(jwt, jwtAuthentication.getTokenType());
+            CurrentUserDTO userDTO = jwtDecoderFactory.extract(jwt, jwtAuthentication.getTokenType());
             jwtAuthentication.setAuthenticated(true);
             jwtAuthentication.setUserDTO(userDTO);
+        } catch (TokenExpiredException e) {
+            throw new DobrostoreTokenExpiredException("Token is expired");
         } catch (JWTVerificationException e) {
-            throw new IllegalArgumentException(e);
+            throw new DobrostoreTokenVerificationException("Token is not verified");
         }
 
         return jwtAuthentication;
