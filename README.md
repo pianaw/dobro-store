@@ -1,5 +1,9 @@
 # dobro-store
 
+## Requirements
+1. JDK 11
+2. Maven 3.8.2
+
 ## Quick Start
 ### For development
 1. Установить Docker
