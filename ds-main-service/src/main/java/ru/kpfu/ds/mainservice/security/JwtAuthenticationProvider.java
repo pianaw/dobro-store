@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import ru.kpfu.ds.mainservice.model.dto.CurrentUserDTO;
 import ru.kpfu.ds.mainservice.model.exception.DobrostoreTokenExpiredException;
 import ru.kpfu.ds.mainservice.model.exception.DobrostoreTokenVerificationException;
-import ru.kpfu.ds.mainservice.util.jwt.extractor.JwtDecoderFactory;
+import ru.kpfu.ds.mainservice.util.jwt.extractor.JwtExtractor;
 
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private JwtDecoderFactory jwtDecoderFactory;
+    private JwtExtractor jwtExtractor;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,7 +24,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
         try {
             String jwt = jwtAuthentication.getName();
-            CurrentUserDTO userDTO = jwtDecoderFactory.extract(jwt, jwtAuthentication.getTokenType());
+            CurrentUserDTO userDTO = jwtExtractor.extract(jwt, jwtAuthentication.getTokenType());
             jwtAuthentication.setAuthenticated(true);
             jwtAuthentication.setUserDTO(userDTO);
         } catch (TokenExpiredException e) {

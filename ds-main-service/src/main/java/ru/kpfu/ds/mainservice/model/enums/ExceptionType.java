@@ -13,7 +13,8 @@ public enum ExceptionType {
     PASSWORD_MISMATCH(3, HttpStatus.CONFLICT, "Invalid password"),
     CLIENT_NOT_FOUND(4, HttpStatus.NOT_FOUND, "Client not found"),
     TOKEN_EXPIRED(5, HttpStatus.UNAUTHORIZED, "Token is expired"),
-    TOKEN_NOT_VERIFIED(6, HttpStatus.UNAUTHORIZED, "Token is not verified");
+    TOKEN_NOT_VERIFIED(6, HttpStatus.UNAUTHORIZED, "Token is not verified"),
+    ACCESS_DENIED(7, HttpStatus.UNAUTHORIZED, "Access is denied");
 
     private Integer code;
     private HttpStatus httpStatus;

@@ -3,9 +3,6 @@ package ru.kpfu.ds.mainservice.util.jwt.extractor;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Component;
-import ru.kpfu.ds.mainservice.model.constant.Constant;
-import ru.kpfu.ds.mainservice.model.dto.CurrentUserDTO;
-import ru.kpfu.ds.mainservice.model.enums.TokenType;
 import ru.kpfu.ds.mainservice.model.enums.UserRole;
 
 import java.util.List;
@@ -23,11 +20,7 @@ public class JwtDecoderFactory {
                 .collect(Collectors.toMap(JwtDecoder::getUserRole, Function.identity()));
     }
 
-    public CurrentUserDTO extract(String jwt, TokenType tokenType) {
-        return getDecoder(jwt).verifyAndDecode(jwt, tokenType);
-    }
-
-    private JwtDecoder getDecoder(String jwt) {
+    protected JwtDecoder getDecoder(String jwt) {
         DecodedJWT decodedJWT = JWT.decode(jwt);
 
         UserRole role = UserRole.valueOf(decodedJWT.getClaim("role").asString());

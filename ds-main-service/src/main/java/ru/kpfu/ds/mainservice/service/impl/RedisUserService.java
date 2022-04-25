@@ -25,10 +25,15 @@ public class RedisUserService {
         RedisUser redisUser;
         if (userRedisId != null) {
             redisUser = redisUserRepository.findById(userRedisId.toString())
-                    .orElseThrow(IllegalArgumentException::new); //TODO:  возможно здесь можно заложить логику забаненого пользователя: если его нет в redis - он забанен
+                    .orElse(RedisUser.builder()
+                            .id(userRedisId.toString())
+                            .userId(user.getId())
+                            .build());
+
             if (redisUser.getTokens() == null) {
                 redisUser.setTokens(new ArrayList<>());
             }
+
             redisUser.getTokens().add(jti.toString());
         } else {
             redisUser = RedisUser.builder()

@@ -1,7 +1,5 @@
 package ru.kpfu.ds.mainservice.security.filter;
 
-
-import antlr.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;

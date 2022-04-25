@@ -55,8 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests().antMatchers(authorizeRequests.toArray(new String[0])).permitAll()
                 .and()
-                .addFilterAt(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(refreshTokenFilter(), AccessTokenFilter.class);
+                .addFilterAt(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -88,6 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 = new FilterRegistrationBean<>();
 
         registrationBean.setFilter(accessTokenFilter());
+        registrationBean.setOrder(1);
         registrationBean.addUrlPatterns("/api/v1/users/**");
 
         return registrationBean;
@@ -98,6 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         FilterRegistrationBean<RefreshTokenFilter> registrationBean = new FilterRegistrationBean<>();
 
         registrationBean.setFilter(refreshTokenFilter());
+        registrationBean.setOrder(2);
         registrationBean.addUrlPatterns("/api/v1/auth/refresh");
 
         return registrationBean;
