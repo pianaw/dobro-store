@@ -16,7 +16,7 @@ public abstract class JwtCreator {
     public String createAccessTokenFor(User user, UUID jti) {
         JWTCreator.Builder builder = JWT.create()
                 .withSubject(user.getId().toString())
-                .withClaim("role", user.getUserRole().toString())
+                .withClaim("role", user.getRole().toString())
                 .withClaim("email", user.getEmail())
                 .withClaim("redisId", user.getRedisId().toString())
                 .withClaim("ownerId", user.getOwnerId())

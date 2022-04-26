@@ -3,8 +3,9 @@ package ru.kpfu.ds.mainservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kpfu.ds.mainservice.model.dto.ClientDTO;
+import ru.kpfu.ds.mainservice.model.dto.BaseClientDTO;
 import ru.kpfu.ds.mainservice.model.dto.ClientStatisticDTO;
+import ru.kpfu.ds.mainservice.model.dto.FullClientDTO;
 import ru.kpfu.ds.mainservice.model.entity.Client;
 import ru.kpfu.ds.mainservice.model.entity.Object;
 import ru.kpfu.ds.mainservice.model.enums.ObjectType;
@@ -36,10 +37,16 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public ClientDTO getClient(Long clientId) {
+    public BaseClientDTO getClient(Long clientId) {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ClientNotFoundException(String.format("Client not found by id [%s]", clientId)));
 
-        return clientMapper.toDTO(client);
+        return clientMapper.toBaseClientDTO(client);
+    }
+
+    @Transactional
+    public FullClientDTO add(FullClientDTO clientDTO) {
+        Client savedClient = clientRepository.save(clientMapper.toEntity(clientDTO));
+        return clientMapper.merge(clientDTO, savedClient);
     }
 }

@@ -14,6 +14,7 @@ import ru.kpfu.ds.mainservice.model.exception.UnknownException;
 import ru.kpfu.ds.mainservice.security.JwtAuthentication;
 import ru.kpfu.ds.mainservice.service.AuthService;
 import ru.kpfu.ds.mainservice.service.TokenService;
+import ru.kpfu.ds.mainservice.util.bcrypt.BCryptUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -21,13 +22,13 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserService userService;
     private final TokenService tokenService;
-    private final PasswordEncoder passwordEncoder;
+    private final BCryptUtil bCryptUtil;
 
     @Override
     public AuthTokenDTO authenticate(UserEmailPasswordDTO dto) {
         User user = userService.getByEmailOrThrow(dto.getEmail());
 
-        if (!passwordEncoder.matches(dto.getPassword(), user.getHashPassword())) {
+        if (!bCryptUtil.match(dto.getPassword(), user.getHashPassword())) {
             throw new PasswordMismatchException("Invalid password");
         }
 

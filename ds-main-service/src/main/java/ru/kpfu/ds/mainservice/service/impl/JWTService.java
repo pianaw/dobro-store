@@ -35,7 +35,7 @@ public class JWTService implements TokenService {
     }
 
     private AuthTokenDTO createJwtToken(User user, UUID jti) {
-        JwtCreator jwtCreator = factory.getJwtCreatorByUserRole(user.getUserRole());
+        JwtCreator jwtCreator = factory.getJwtCreatorByUserRole(user.getRole());
 
         String accessToken = jwtCreator.createAccessTokenFor(user, jti);
         String refreshToken = jwtCreator.createRefreshTokenFor(user, jti);

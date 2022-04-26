@@ -8,7 +8,7 @@ import ru.kpfu.ds.mainservice.model.enums.ClientLevel;
 @Data
 @Getter
 @Setter
-public class ClientDTO {
+public class BaseClientDTO {
 
     private String firstName;
     private String lastName;
