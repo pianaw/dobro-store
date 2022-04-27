@@ -1,5 +1,6 @@
 package ru.kpfu.ds.mainservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,13 @@ public class AuthController {
     private final TokenService jwtService;
 
     @PostMapping
+    @Operation(description = "Аутентификация пользователя по логину и паролю")
     public AuthTokenDTO authenticate(@RequestBody UserEmailPasswordDTO dto) {
         return authServiceImpl.authenticate(dto);
     }
 
     @PostMapping("/refresh")
+    @Operation(description = "Обновление токенов авторизации")
     public AuthTokenDTO refresh(@AuthenticationPrincipal CurrentUserDTO currentUser) {
         return jwtService.refreshToken(currentUser);
     }

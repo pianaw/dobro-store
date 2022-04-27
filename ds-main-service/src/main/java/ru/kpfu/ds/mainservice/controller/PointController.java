@@ -1,5 +1,6 @@
 package ru.kpfu.ds.mainservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class PointController {
     private final PointService pointService;
 
     @GetMapping
+    @Operation(description = "Поиск пунктов приёма вторсырья по идентификатору города")
     public List<PointDTO> getPointsByCityId(@PathVariable Long cityId) {
         return pointService.getPointsByCityId(cityId);
     }

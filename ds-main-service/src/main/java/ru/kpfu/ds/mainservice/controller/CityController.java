@@ -1,5 +1,6 @@
 package ru.kpfu.ds.mainservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class CityController {
     private final CityService cityService;
 
     @GetMapping
+    @Operation(description = "Поиск всех городов")
     public List<CityDTO> getAllCities() {
         return cityService.getAll();
     }
