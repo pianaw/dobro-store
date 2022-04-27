@@ -6,9 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kpfu.ds.mainservice.model.dto.UserDTO;
 import ru.kpfu.ds.mainservice.model.entity.User;
 import ru.kpfu.ds.mainservice.model.enums.UserRole;
+import ru.kpfu.ds.mainservice.model.exception.UserAlreadyExistsException;
 import ru.kpfu.ds.mainservice.model.exception.UserNotFoundException;
 import ru.kpfu.ds.mainservice.model.mapper.UserMapper;
 import ru.kpfu.ds.mainservice.repository.UserRepository;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +36,12 @@ public class UserService {
     public void add(UserDTO userDTO) {
         User user = userMapper.toEntity(userDTO);
         userRepository.save(user);
+    }
+
+    public void throwIfPresent(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            throw new UserAlreadyExistsException("Such user already exists");
+        }
     }
 }

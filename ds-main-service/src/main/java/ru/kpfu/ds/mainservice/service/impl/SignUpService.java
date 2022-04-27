@@ -15,6 +15,7 @@ public class SignUpService {
 
     @Transactional
     public BaseClientDTO signUp(FullClientDTO form) {
+        userService.throwIfPresent(form.getUser().getCredentials().getEmail()); //TODO: валидация полей
         FullClientDTO clientDTO = clientService.add(form);
         userService.add(clientDTO.getUser());
         return clientDTO;

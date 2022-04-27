@@ -14,7 +14,8 @@ public enum ExceptionType {
     CLIENT_NOT_FOUND(4, HttpStatus.NOT_FOUND, "Client not found"),
     TOKEN_EXPIRED(5, HttpStatus.UNAUTHORIZED, "Token is expired"),
     TOKEN_NOT_VERIFIED(6, HttpStatus.UNAUTHORIZED, "Token is not verified"),
-    ACCESS_DENIED(7, HttpStatus.UNAUTHORIZED, "Access is denied");
+    ACCESS_DENIED(7, HttpStatus.UNAUTHORIZED, "Access is denied"),
+    USER_ALREADY_EXISTS(8, HttpStatus.CONFLICT, "User already exists");
 
     private Integer code;
     private HttpStatus httpStatus;
