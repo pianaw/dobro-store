@@ -12,14 +12,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class CatalogService {
-
+public class PointService {
     private final PointRepository pointRepository;
     private final PointMapper pointMapper;
 
     @Transactional(readOnly = true)
-    public List<PointDTO> getAllPointsByCity(String city) {
-        return pointRepository.findAllByCity(city).stream()
+    public List<PointDTO> getPointsByCityId(Long cityId) {
+        return pointRepository.findAllByCity_Id(cityId).stream()
                 .map(pointMapper::toDTO)
                 .collect(Collectors.toList());
     }

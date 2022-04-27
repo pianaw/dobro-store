@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PointRepository extends JpaRepository<Point, Long> {
 
-    List<Point> findAllByCity(String city);
+    List<Point> findAllByCity_Id(Long cityId);
 }

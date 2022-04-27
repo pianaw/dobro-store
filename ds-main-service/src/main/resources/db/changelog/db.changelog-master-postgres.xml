@@ -6,5 +6,6 @@
 
     <include relativeToChangelogFile="true" file="changes-postgres/changelog.18-03-22.xml"/>
     <include relativeToChangelogFile="true" file="changes-postgres/changelog.12-04-22.xml"/>
+    <include relativeToChangelogFile="true" file="changes-postgres/changelog.27-04-22.xml"/>
 
 </databaseChangeLog>

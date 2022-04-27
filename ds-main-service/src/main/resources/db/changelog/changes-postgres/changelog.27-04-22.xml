@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="27-04-22-01" author="DianaM">
+        <createTable tableName="city" remarks="Город">
+            <column name="id" type="BIGINT" autoIncrement="true" remarks="Идентификатор города">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_city"/>
+            </column>
+            <column name="name" type="VARCHAR(50)" remarks="Название города">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="27-04-22-02" author="DianaM">
+        <dropColumn tableName="point" columnName="city"/>
+        <addColumn tableName="point">
+            <column name="city_id" type="BIGINT" remarks="Идентификатор города">
+                <constraints foreignKeyName="fk_point_city_id" references="city(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="27-04-22-03" author="DianaM">
+        <insert tableName="city">
+            <column name="name" value="Казань"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
